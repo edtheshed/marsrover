@@ -13,14 +13,13 @@ public class MarsRoverService {
     }
 
     public void moveRover(String moves) {
-        //char[] moveArray = moves.toCharArray();
-//        for (char move : moveArray) {
-            if (direction == "N")
-                yPosition++;
-            if (direction == "S")
-                yPosition--;
+        if ("N".equals(direction))
+            yPosition++;
+        if ("S".equals(direction))
+            yPosition--;
+        if ("E".equals(direction))
+            xPosition++;
     }
-
 
     public String getOutput() {
         return String.format("%s %s %s", xPosition, yPosition, direction);
