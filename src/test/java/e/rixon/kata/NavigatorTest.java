@@ -1,6 +1,7 @@
 package e.rixon.kata;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -13,7 +14,7 @@ public class NavigatorTest {
 
     @BeforeEach
     void setUp() {
-        navigator = new Navigator();
+        navigator = new Navigator(10,10);
     }
 
     @ParameterizedTest
@@ -40,5 +41,19 @@ public class NavigatorTest {
         Direction expected = getDirection(outputDirection);
         Direction current = getDirection(inputDirection);
         assertEquals(expected, navigator.getRight(current));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "10,10,1,0,1,10",
+            "10,10,0,1,10,1",
+            "1,1,-1,0,10,1",
+            "1,1,0,-1,1,10",
+            "1,1,1,1,2,2"
+    })
+    void a_move_at_the_edge_of_the_grid_wraps_around(int currentX, int currentY, int xModifier, int yModifier, int expectedX, int expectedY) {
+        navigator = new Navigator(10,10);
+        Position actualPosition = navigator.getPosition(new Position(currentX,currentY), xModifier, yModifier);
+        assertEquals(new Position(expectedX, expectedY), actualPosition);
     }
 }

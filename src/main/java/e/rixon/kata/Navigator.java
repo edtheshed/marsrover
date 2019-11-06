@@ -1,28 +1,33 @@
 package e.rixon.kata;
 
-import java.util.Map;
-
 public class Navigator {
 
-    Map<Direction, Direction> leftMap = Map.of(
-            Direction.NORTH, Direction.WEST,
-            Direction.WEST, Direction.SOUTH,
-            Direction.SOUTH, Direction.EAST,
-            Direction.EAST, Direction.NORTH
-    );
+    final DirectionFinder directionFinder = new DirectionFinder();
+    private final int xBound;
+    private final int yBound;
 
-    Map<Direction, Direction> rightMap = Map.of(
-            Direction.NORTH, Direction.EAST,
-            Direction.WEST, Direction.NORTH,
-            Direction.SOUTH, Direction.WEST,
-            Direction.EAST, Direction.SOUTH
-    );
+    public Navigator(int xBound, int yBound) {
+        this.xBound = xBound;
+        this.yBound = yBound;
+    }
 
     public Direction getLeft(Direction direction) {
-        return leftMap.get(direction);
+        return directionFinder.getLeft(direction);
     }
 
     public Direction getRight(Direction direction) {
-        return rightMap.get(direction);
+        return directionFinder.getRight(direction);
+    }
+
+    public Position getPosition(Position currentPosition, int initialXModifier, int initialYModifier) {
+        if(currentPosition.getX() + initialXModifier > xBound)
+            return new Position(1, currentPosition.getY());
+        if(currentPosition.getY() + initialYModifier > yBound)
+            return new Position(currentPosition.getX(), 1);
+        if(currentPosition.getX() + initialXModifier < 1)
+            return new Position(xBound, currentPosition.getY());
+        if(currentPosition.getY() + initialYModifier < 1)
+            return new Position(currentPosition.getX(), yBound);
+        return currentPosition.move(initialXModifier, initialYModifier);
     }
 }

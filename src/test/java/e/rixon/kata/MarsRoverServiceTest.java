@@ -78,7 +78,7 @@ public class MarsRoverServiceTest {
         then_the_rover_is_at(expectedOutput);
     }
 
-//    @Test
+    @Test
     void rover_can_finish_where_it_started_if_only_move_forward() {
         given_a_mars_rover_service(3, 3);
         given_a_rover_with(1, 1, Direction.NORTH);

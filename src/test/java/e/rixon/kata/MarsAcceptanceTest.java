@@ -14,7 +14,7 @@ public class MarsAcceptanceTest {
         assertEquals("1 6 W", service.getOutput());
     }
 
-//    @Test
+    @Test
     void rover_can_finish_where_it_started_if_only_move_forward() {
         MarsRoverService service = new MarsRoverService(3, 3);
         service.setRover(1, 1, Direction.NORTH);

@@ -11,7 +11,7 @@ public class MarsRoverService {
     }
 
     public void setRover(int x, int y, Direction direction) {
-        setRover(new Rover(new Position(x,y), direction, new Navigator()));
+        setRover(new Rover(new Position(x,y), direction, new Navigator(xGridSize, yGridSize)));
     }
 
     public void setRover(Rover rover) {
