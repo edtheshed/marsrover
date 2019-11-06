@@ -13,6 +13,8 @@ public class Rover {
             EAST, new PositionVector(1, 0),
             WEST, new PositionVector(-1, 0));
 
+    private DirectionFinder directionFinder;
+
     public Rover(Position position, Direction direction) {
         this.position = position;
         this.direction = direction;
@@ -31,6 +33,10 @@ public class Rover {
     @Override
     public String toString() {
         return String.format("%s %s %s", position.getX(), position.getY(), direction);
+    }
+
+    public void turnLeft() {
+
     }
 }
 

@@ -19,6 +19,8 @@ public class MarsRoverService {
         for(char move : moveArray){
             if ('M' == move)
                 rover.move();
+            if ('L' == move)
+                rover.turnLeft();
         }
     }
 

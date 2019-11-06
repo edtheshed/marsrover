@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static e.rixon.kata.DirectionUtility.getDirection;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MarsRoverServiceTest {
@@ -39,14 +40,6 @@ public class MarsRoverServiceTest {
         then_the_rover_is_at(expectedOutput);
     }
 
-    private Direction getDirection(String direction) {
-        if("N".equals(direction)) return Direction.NORTH;
-        if("W".equals(direction)) return Direction.WEST;
-        if("E".equals(direction)) return Direction.EAST;
-        if("S".equals(direction)) return Direction.SOUTH;
-        throw new IllegalArgumentException("unknown direction " + direction);
-    }
-
     private void when_the_rover_moves(String moves) {
         service.moveRover(moves);
     }
@@ -71,5 +64,13 @@ public class MarsRoverServiceTest {
         given_a_rover_with(x, y, getDirection(direction));
         when_the_rover_moves(moves);
         then_the_rover_is_at(expectedOutput);
+    }
+
+//    @Test
+    void moving_and_turning_a_rover_should_return_new_location() {
+        given_a_mars_rover_service();
+        given_a_rover_with(3, 3, Direction.NORTH);
+        when_the_rover_moves("ML");
+        then_the_rover_is_at("3 4 W");
     }
 }
