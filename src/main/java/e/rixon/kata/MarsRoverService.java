@@ -9,7 +9,6 @@ public class MarsRoverService {
     private int xGridSize;
     private int yGridSize;
     private Rover rover;
-    private boolean obstacleFlag = false;
 
     public MarsRoverService(int xGridSize, int yGridSize, Position... obstacles) {
         this.xGridSize = xGridSize;
@@ -30,7 +29,6 @@ public class MarsRoverService {
         for(char move : moveArray){
             if ('M' == move) {
                 if(!rover.moveForward()) {
-                    obstacleFlag = true;
                     break;
                 }
             }
@@ -42,6 +40,6 @@ public class MarsRoverService {
     }
 
     public String getOutput() {
-        return obstacleFlag ? "O " + rover.toString() : rover.toString();
+        return rover.toString();
     }
 }

@@ -14,6 +14,8 @@ public class Rover {
             WEST, new PositionVector(-1, 0));
 
     private Navigator navigator;
+    private boolean obstacleFlag = false;
+
 
     public Rover(Position position, Direction direction, Navigator navigator) {
         this.position = position;
@@ -27,8 +29,10 @@ public class Rover {
             if(direction.equals(this.direction)) {
                 PositionVector vector = directionVector.getValue();
                 Position newPosition = navigator.getPosition(position, vector.getxModifier(), vector.getyModifier());
-                if (this.position.equals(newPosition))
+                if (this.position.equals(newPosition)) {
+                    obstacleFlag = true;
                     return false;
+                }
                 this.position = newPosition;
                 return true;
             }
@@ -38,7 +42,7 @@ public class Rover {
 
     @Override
     public String toString() {
-        return String.format("%s %s %s", position.getX(), position.getY(), direction);
+        return obstacleFlag ? String.format("%s %s %s %s", "O", position.getX(), position.getY(), direction) : String.format("%s %s %s", position.getX(), position.getY(), direction);
     }
 
     public void turnLeft() {
