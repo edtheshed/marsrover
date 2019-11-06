@@ -7,7 +7,7 @@ public class MarsRoverService {
     }
 
     public void setRover(int x, int y, Direction direction) {
-        setRover(new Rover(x, y, direction));
+        setRover(new Rover(new Position(x,y), direction));
     }
 
     public void setRover(Rover rover) {

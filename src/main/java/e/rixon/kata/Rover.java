@@ -6,10 +6,6 @@ public class Rover {
     private Position position;
     private Direction direction;
 
-    public Rover(int x, int y, Direction direction) {
-        this(new Position(x, y), direction);
-    }
-
     public Rover(Position position, Direction direction) {
         this.position = position;
         this.direction = direction;
@@ -17,13 +13,14 @@ public class Rover {
 
     public void move() {
         if (NORTH.equals(direction))
-            position.setY(position.getY()+1);
+            this.position = position.move(0, 1);
         if (SOUTH.equals(direction))
-            position.setY(position.getY()-1);
+            this.position = position.move(0, -1);
         if (EAST.equals(direction))
-            position.setX(position.getX()+1);
+            this.position = position.move(1, 0);
         if (WEST.equals(direction))
-            position.setX(position.getX()-1);
+            this.position = position.move(-1, 0);
+
     }
 
     @Override

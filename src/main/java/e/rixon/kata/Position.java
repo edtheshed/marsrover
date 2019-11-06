@@ -24,4 +24,8 @@ public class Position {
     public int getY() {
         return y;
     }
+
+    public Position move(int xModifier, int yModifier) {
+        return new Position(x + xModifier, y + yModifier);
+    }
 }
