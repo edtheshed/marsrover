@@ -7,6 +7,7 @@ import static e.rixon.kata.Direction.*;
 public class Rover {
     private Position position;
     private Direction direction;
+
     private final Map<Direction, PositionVector> positionVectorMap = Map.of(
             NORTH, new PositionVector(0, 1),
             SOUTH, new PositionVector(0, -1),
@@ -24,8 +25,9 @@ public class Rover {
     }
 
     public boolean moveForward() {
-        for(Map.Entry<Direction, PositionVector> directionVector: positionVectorMap.entrySet()) {
+        for(Map.Entry<Direction, PositionVector> directionVector : positionVectorMap.entrySet()) {
             Direction direction = directionVector.getKey();
+
             if(direction.equals(this.direction)) {
                 PositionVector vector = directionVector.getValue();
                 Position newPosition = navigator.getPosition(position, vector.getxModifier(), vector.getyModifier());

@@ -23,7 +23,7 @@ public class MarsAcceptanceTest {
     }
 
     @Test
-    void rover_cant_pass_through_another_rover() {
+    void rover_cant_pass_through_an_obstacle() {
         MarsRoverService service = new MarsRoverService(3, 3, new Position(1, 3));
         service.setRover(1, 1, Direction.NORTH);
         service.moveRover("MMM");
