@@ -1,3 +1,6 @@
+package e.rixon.kata;
+
+import e.rixon.kata.MarsRoverService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -27,7 +30,8 @@ public class MarsRoverServiceTest {
     @CsvSource({
             "1,1,N,1 2 N",
             "2,2,S,2 1 S",
-            "1,1,E,2 1 E"
+            "1,1,E,2 1 E",
+            "2,2,W,1 2 W"
     })
     void moving_a_placed_rover_and_get_output_should_return_new_location(int x, int y, String direction, String expectedOutput) {
         given_a_mars_rover_service();

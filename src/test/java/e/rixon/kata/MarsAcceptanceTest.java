@@ -1,6 +1,7 @@
-import org.junit.jupiter.api.Test;
+package e.rixon.kata;
 
-import javax.imageio.ImageWriter;
+import e.rixon.kata.MarsRoverService;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
