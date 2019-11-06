@@ -2,7 +2,7 @@ package e.rixon.kata;
 
 import java.util.Map;
 
-public class DirectionFinder {
+public class Navigator {
 
     Map<Direction, Direction> leftMap = Map.of(
             Direction.NORTH, Direction.WEST,

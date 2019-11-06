@@ -7,13 +7,13 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static e.rixon.kata.DirectionUtility.getDirection;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DirectionFinderTest {
+public class NavigatorTest {
 
-    private DirectionFinder directionFinder;
+    private Navigator navigator;
 
     @BeforeEach
     void setUp() {
-        directionFinder = new DirectionFinder();
+        navigator = new Navigator();
     }
 
     @ParameterizedTest
@@ -26,7 +26,7 @@ public class DirectionFinderTest {
     void given_a_direction_when_left_returns_left_direction(String inputDirection, String outputDirection) {
         Direction expected = getDirection(outputDirection);
         Direction current = getDirection(inputDirection);
-        assertEquals(expected, directionFinder.getLeft(current));
+        assertEquals(expected, navigator.getLeft(current));
     }
 
     @ParameterizedTest
@@ -39,6 +39,6 @@ public class DirectionFinderTest {
     void given_a_direction_when_right_returns_right_direction(String inputDirection, String outputDirection) {
         Direction expected = getDirection(outputDirection);
         Direction current = getDirection(inputDirection);
-        assertEquals(expected, directionFinder.getRight(current));
+        assertEquals(expected, navigator.getRight(current));
     }
 }

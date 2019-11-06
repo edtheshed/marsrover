@@ -13,14 +13,15 @@ public class Rover {
             EAST, new PositionVector(1, 0),
             WEST, new PositionVector(-1, 0));
 
-    private DirectionFinder directionFinder;
+    private Navigator navigator;
 
-    public Rover(Position position, Direction direction) {
+    public Rover(Position position, Direction direction, Navigator navigator) {
         this.position = position;
         this.direction = direction;
+        this.navigator = navigator;
     }
 
-    public void move() {
+    public void moveForward() {
         for(Map.Entry<Direction, PositionVector> directionVector: positionVectorMap.entrySet()) {
             Direction direction = directionVector.getKey();
             if(direction.equals(this.direction)) {
@@ -36,42 +37,11 @@ public class Rover {
     }
 
     public void turnLeft() {
+        this.direction = navigator.getLeft(direction);
+    }
 
+    public void turnRight() {
+        this.direction = navigator.getRight(direction);
     }
 }
 
-class PositionVector {
-    private final int xModifier;
-    private final int yModifier;
-
-    PositionVector(int xModifier, int yModifier) {
-        this.xModifier = xModifier;
-        this.yModifier = yModifier;
-    }
-
-    public int getxModifier() {
-        return xModifier;
-    }
-
-    public int getyModifier() {
-        return yModifier;
-    }
-}
-
-enum Direction {
-    NORTH("N"),
-    EAST("E"),
-    WEST("W"),
-    SOUTH("S");
-
-    private String direction;
-
-    Direction(String direction) {
-        this.direction = direction;
-    }
-
-    @Override
-    public String toString() {
-        return direction;
-    }
-}
