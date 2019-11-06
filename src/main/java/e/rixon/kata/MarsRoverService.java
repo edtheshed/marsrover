@@ -15,7 +15,11 @@ public class MarsRoverService {
     }
 
     public void moveRover(String moves) {
-        rover.move();
+        char[] moveArray = moves.toCharArray();
+        for(char move : moveArray){
+            if ('M' == move)
+                rover.move();
+        }
     }
 
     public String getOutput() {

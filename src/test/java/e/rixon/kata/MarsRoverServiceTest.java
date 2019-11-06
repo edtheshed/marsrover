@@ -1,6 +1,5 @@
 package e.rixon.kata;
 
-import e.rixon.kata.MarsRoverService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -36,7 +35,7 @@ public class MarsRoverServiceTest {
     void moving_a_placed_rover_and_get_output_should_return_new_location(int x, int y, String direction, String expectedOutput) {
         given_a_mars_rover_service();
         given_a_rover_with(x, y, getDirection(direction));
-        when_the_rover_moves();
+        when_the_rover_moves("M");
         then_the_rover_is_at(expectedOutput);
     }
 
@@ -48,8 +47,8 @@ public class MarsRoverServiceTest {
         throw new IllegalArgumentException("unknown direction " + direction);
     }
 
-    private void when_the_rover_moves() {
-        service.moveRover("M");
+    private void when_the_rover_moves(String moves) {
+        service.moveRover(moves);
     }
 
     private void given_a_rover_with(int x, int y, Direction direction) {
@@ -60,4 +59,17 @@ public class MarsRoverServiceTest {
         this.service = new MarsRoverService(10, 10);
     }
 
+    @ParameterizedTest
+    @CsvSource({
+            "1,1,N,MM,1 3 N",
+            "2,5,S,MMMM,2 1 S",
+            "1,1,E,MMM,4 1 E",
+            "6,2,W,MMMMM,1 2 W"
+    })
+    void moving_a_rover_more_than_1_square_should_return_new_location(int x, int y, String direction, String moves, String expectedOutput) {
+        given_a_mars_rover_service();
+        given_a_rover_with(x, y, getDirection(direction));
+        when_the_rover_moves(moves);
+        then_the_rover_is_at(expectedOutput);
+    }
 }
