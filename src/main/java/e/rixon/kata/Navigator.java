@@ -28,6 +28,7 @@ public class Navigator {
             return new Position(xBound, currentPosition.getY());
         if(currentPosition.getY() + initialYModifier < 1)
             return new Position(currentPosition.getX(), yBound);
+
         return currentPosition.move(initialXModifier, initialYModifier);
     }
 }

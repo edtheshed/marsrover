@@ -18,7 +18,7 @@ public class MarsAcceptanceTest {
     void rover_can_finish_where_it_started_if_only_move_forward() {
         MarsRoverService service = new MarsRoverService(3, 3);
         service.setRover(1, 1, Direction.NORTH);
-        service.moveRover("MMM");
-        assertEquals("1 1 N", service.getOutput());
+        service.moveRover("MMMLMMM");
+        assertEquals("1 1 W", service.getOutput());
     }
 }

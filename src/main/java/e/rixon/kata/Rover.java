@@ -26,7 +26,7 @@ public class Rover {
             Direction direction = directionVector.getKey();
             if(direction.equals(this.direction)) {
                 PositionVector vector = directionVector.getValue();
-                this.position = position.move(vector.getxModifier(), vector.getyModifier());
+                this.position = navigator.getPosition(position, vector.getxModifier(), vector.getyModifier());
             }
         }
     }
