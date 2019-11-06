@@ -21,14 +21,19 @@ public class Rover {
         this.navigator = navigator;
     }
 
-    public void moveForward() {
+    public boolean moveForward() {
         for(Map.Entry<Direction, PositionVector> directionVector: positionVectorMap.entrySet()) {
             Direction direction = directionVector.getKey();
             if(direction.equals(this.direction)) {
                 PositionVector vector = directionVector.getValue();
-                this.position = navigator.getPosition(position, vector.getxModifier(), vector.getyModifier());
+                Position newPosition = navigator.getPosition(position, vector.getxModifier(), vector.getyModifier());
+                if (this.position.equals(newPosition))
+                    return false;
+                this.position = newPosition;
+                return true;
             }
         }
+        throw new IllegalStateException("Unsupported direction");
     }
 
     @Override

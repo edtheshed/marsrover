@@ -21,4 +21,12 @@ public class MarsAcceptanceTest {
         service.moveRover("MMMLMMM");
         assertEquals("1 1 W", service.getOutput());
     }
+
+    @Test
+    void rover_cant_pass_through_another_rover() {
+        MarsRoverService service = new MarsRoverService(3, 3, new Position(1, 3));
+        service.setRover(1, 1, Direction.NORTH);
+        service.moveRover("MMM");
+        assertEquals("O 1 2 N", service.getOutput());
+    }
 }

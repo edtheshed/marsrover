@@ -1,14 +1,18 @@
 package e.rixon.kata;
 
+import java.util.List;
+
 public class Navigator {
 
     final DirectionFinder directionFinder = new DirectionFinder();
     private final int xBound;
     private final int yBound;
+    private List<Position> obstacles;
 
-    public Navigator(int xBound, int yBound) {
+    public Navigator(int xBound, int yBound, List<Position> obstacles) {
         this.xBound = xBound;
         this.yBound = yBound;
+        this.obstacles = obstacles;
     }
 
     public Direction getLeft(Direction direction) {
@@ -20,15 +24,19 @@ public class Navigator {
     }
 
     public Position getPosition(Position currentPosition, int initialXModifier, int initialYModifier) {
+        Position finalPosition = currentPosition.move(initialXModifier, initialYModifier);;
         if(currentPosition.getX() + initialXModifier > xBound)
-            return new Position(1, currentPosition.getY());
+            finalPosition = new Position(1, currentPosition.getY());
         if(currentPosition.getY() + initialYModifier > yBound)
-            return new Position(currentPosition.getX(), 1);
+            finalPosition = new Position(currentPosition.getX(), 1);
         if(currentPosition.getX() + initialXModifier < 1)
-            return new Position(xBound, currentPosition.getY());
+            finalPosition = new Position(xBound, currentPosition.getY());
         if(currentPosition.getY() + initialYModifier < 1)
-            return new Position(currentPosition.getX(), yBound);
+            finalPosition = new Position(currentPosition.getX(), yBound);
 
-        return currentPosition.move(initialXModifier, initialYModifier);
+        if (obstacles.contains(finalPosition))
+            return currentPosition;
+
+        return finalPosition;
     }
 }
