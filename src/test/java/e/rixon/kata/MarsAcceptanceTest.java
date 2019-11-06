@@ -10,7 +10,7 @@ public class MarsAcceptanceTest {
     @Test
     void roverCanMoveOnAGrid() {
         MarsRoverService service = new MarsRoverService(5, 5);
-        service.setRover(1, 2, "N");
+        service.setRover(1, 2, Direction.NORTH);
         service.moveRover("LMLMLMLMM");
         assertEquals("1 3 N", service.getOutput());
     }

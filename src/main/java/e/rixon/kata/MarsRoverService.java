@@ -6,7 +6,7 @@ public class MarsRoverService {
     public MarsRoverService(int xGridSize, int yGridSize) {
     }
 
-    public void setRover(int x, int y, String direction) {
+    public void setRover(int x, int y, Direction direction) {
         setRover(new Rover(x, y, direction));
     }
 
