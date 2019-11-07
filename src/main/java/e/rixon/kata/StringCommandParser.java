@@ -1,17 +1,13 @@
 package e.rixon.kata;
 
-import e.rixon.kata.Command;
-import e.rixon.kata.MoveForwardCommand;
-import e.rixon.kata.TurnLeftCommand;
-import e.rixon.kata.TurnRightCommand;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandUtility {
-    public static List<Command> parseCommands(String commands) {
+class StringCommandParser implements CommandParser<String> {
+    @Override
+    public List<Command> parseCommands(String commands) {
         List<Command> commandList = new ArrayList<>();
-        for(char command: commands.toCharArray()) {
+        for(Character command : commands.toCharArray()) {
             Command parsedCommand = switch (command) {
                 case 'M' -> new MoveForwardCommand();
                 case 'L' -> new TurnLeftCommand();

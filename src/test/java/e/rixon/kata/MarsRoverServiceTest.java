@@ -1,5 +1,6 @@
 package e.rixon.kata;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -13,6 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class MarsRoverServiceTest {
 
     MarsRoverService service;
+    StringCommandParser stringCommandParser;
+
+    @BeforeEach
+    void setUp() {
+        stringCommandParser = new StringCommandParser();
+    }
 
     @Test
     void placing_a_rover_and_get_output_should_return_the_rover_location() {
@@ -48,7 +55,7 @@ public class MarsRoverServiceTest {
     }
 
     private void given_a_rover_with(int x, int y, Direction direction, String commands) {
-        given_a_rover_with(x, y, direction, CommandUtility.parseCommands(commands));
+        given_a_rover_with(x, y, direction, stringCommandParser.parseCommands(commands));
     }
 
     private void given_a_rover_with(int x, int y, Direction direction) {
