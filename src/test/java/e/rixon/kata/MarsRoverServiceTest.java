@@ -35,13 +35,12 @@ public class MarsRoverServiceTest {
     })
     void moving_a_placed_rover_and_get_output_should_return_new_location(int x, int y, String direction, String expectedOutput) {
         given_a_mars_rover_service(10, 10);
-        given_a_rover_with(x, y, getDirection(direction));
-        when_the_rover_moves("M");
+        given_a_rover_with(x, y, getDirection(direction), "M");
         then_the_rover_is_at(expectedOutput);
     }
 
-    private void when_the_rover_moves(String moves) {
-        service.moveRover(moves);
+    private void given_a_rover_with(int x, int y, Direction direction, String moves) {
+        service.setRover(x, y, direction, moves);
     }
 
     private void given_a_rover_with(int x, int y, Direction direction) {
@@ -61,8 +60,7 @@ public class MarsRoverServiceTest {
     })
     void moving_a_rover_more_than_1_square_should_return_new_location(int x, int y, String direction, String moves, String expectedOutput) {
         given_a_mars_rover_service(10, 10);
-        given_a_rover_with(x, y, getDirection(direction));
-        when_the_rover_moves(moves);
+        given_a_rover_with(x, y, getDirection(direction), moves);
         then_the_rover_is_at(expectedOutput);
     }
 
@@ -73,16 +71,14 @@ public class MarsRoverServiceTest {
     })
     void moving_and_turning_a_rover_should_return_new_location(String moves, String expectedOutput) {
         given_a_mars_rover_service(10, 10);
-        given_a_rover_with(3, 3, Direction.NORTH);
-        when_the_rover_moves(moves);
+        given_a_rover_with(3, 3, Direction.NORTH, moves);
         then_the_rover_is_at(expectedOutput);
     }
 
     @Test
     void rover_can_finish_where_it_started_if_only_move_forward() {
         given_a_mars_rover_service(3, 3);
-        given_a_rover_with(1, 1, Direction.NORTH);
-        when_the_rover_moves("MMM");
+        given_a_rover_with(1, 1, Direction.NORTH, "MMM");
         then_the_rover_is_at("1 1 N");
     }
 }

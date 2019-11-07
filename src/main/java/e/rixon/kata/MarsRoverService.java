@@ -1,69 +1,62 @@
 package e.rixon.kata;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class MarsRoverService {
 
     private List<Position> obstacles;
     private int xGridSize;
     private int yGridSize;
-    private List<Rover> rovers;
-    private List<String> moveList;
+
+    private Map<Rover, String> roverStringMap;
     private boolean movesRan = false;
 
     public MarsRoverService(int xGridSize, int yGridSize, Position... obstacles) {
         this.xGridSize = xGridSize;
         this.yGridSize = yGridSize;
         this.obstacles = Arrays.asList(obstacles);
-        rovers = new ArrayList<>();
-        moveList = new ArrayList<>();
+        roverStringMap = new HashMap<>();
     }
 
     public void setRover(int x, int y, Direction direction) {
-        obstacles.add()
-        setRover(new Rover(new Position(x, y), direction, new Navigator(xGridSize, yGridSize, obstacles)));
+        setRover(x, y, direction, "");
     }
 
-    public void setRover(Rover rover) {
-        rovers.add(rover);
+    public void setRover(int x, int y, Direction direction, String moves) {
+        roverStringMap.put(new Rover(new Position(x, y), direction, new Navigator(xGridSize, yGridSize, obstacles)), moves);
     }
 
-    public void moveRover(String moves) {
-        moveList.add(moves);
-    }
-
-    private void callMove(List<String> moves) {
-        for (String moveString : moves) {
-            int moveListIndex = 0;
-            char[] moveArray = moveString.toCharArray();
+    private void runRovers() {
+        for (Map.Entry<Rover, String> roverMoveEntry : roverStringMap.entrySet()) {
+            Rover rover = roverMoveEntry.getKey();
+            char[] moveArray = roverMoveEntry.getValue().toCharArray();
             for (char move : moveArray) {
                 if ('M' == move) {
-                    if (!rovers.get(moveListIndex).moveForward()) {
+                    if (!rover.moveForward()) {
                         break;
                     }
                 }
                 if ('L' == move) {
-                    rovers.get(moveListIndex).turnLeft();
+                    rover.turnLeft();
                 }
                 if ('R' == move)
-                    rovers.get(moveListIndex).turnRight();
+                    rover.turnRight();
             }
         }
     }
 
     public String getOutput() {
         if (!movesRan) {
-            callMove(moveList);
+            runRovers();
             movesRan = true;
         }
 
-        StringBuilder str = new StringBuilder();
-        for (Rover rover : rovers) {
-            str.append(rover.toString() + "\n");
-        }
-
-        return str.toString();
+        Set<Rover> rovers = roverStringMap.keySet();
+        return rovers.stream()
+                .map(Rover::toString)
+                .reduce((s1, s2) -> s1 + System.lineSeparator() + s2)
+                .orElse("");
     }
+
+
 }
