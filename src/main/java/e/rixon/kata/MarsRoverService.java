@@ -9,7 +9,7 @@ public class MarsRoverService {
     private int yGridSize;
 
     private Map<Rover, String> roverStringMap;
-    private boolean movesRan = false;
+    private CommandParser<Character> commandParser = new CharacterCommandParser();
 
     public MarsRoverService(int xGridSize, int yGridSize, Position... obstacles) {
         this.xGridSize = xGridSize;
@@ -26,48 +26,17 @@ public class MarsRoverService {
         roverStringMap.put(new Rover(new Position(x, y), direction, new Navigator(xGridSize, yGridSize, obstacles)), moves);
     }
 
-    private void runRovers() {
+    public void parseCommandsAndExecuteCommands() {
         for (Map.Entry<Rover, String> roverMoveEntry : roverStringMap.entrySet()) {
             Rover rover = roverMoveEntry.getKey();
             char[] moveArray = roverMoveEntry.getValue().toCharArray();
             for (char move : moveArray) {
-                // command 1
-                if ('M' == move) {
-                    Command command = new MoveForwardCommand();
-                    if (!command.execute(rover)) {
-                        break;
-                    }
-                }
-
-                // command 2
-                if ('L' == move) {
-                    rover.turnLeft();
-                }
-
-                // command 3
-                if ('R' == move)
-                    rover.turnRight();
+                commandParser.parseCommand(move).execute(rover);
             }
         }
     }
 
-    private interface Command {
-        boolean execute(Rover rover);
-    }
-
-    private class MoveForwardCommand implements Command {
-        @Override
-        public boolean execute(Rover rover) {
-            return rover.moveForward();
-        }
-    }
-
     public String getOutput() {
-        if (!movesRan) {
-            runRovers();
-            movesRan = true;
-        }
-
         Set<Rover> rovers = roverStringMap.keySet();
         return rovers.stream()
                 .map(Rover::toString)
