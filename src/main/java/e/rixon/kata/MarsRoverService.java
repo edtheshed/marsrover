@@ -31,17 +31,34 @@ public class MarsRoverService {
             Rover rover = roverMoveEntry.getKey();
             char[] moveArray = roverMoveEntry.getValue().toCharArray();
             for (char move : moveArray) {
+                // command 1
                 if ('M' == move) {
-                    if (!rover.moveForward()) {
+                    Command command = new MoveForwardCommand();
+                    if (!command.execute(rover)) {
                         break;
                     }
                 }
+
+                // command 2
                 if ('L' == move) {
                     rover.turnLeft();
                 }
+
+                // command 3
                 if ('R' == move)
                     rover.turnRight();
             }
+        }
+    }
+
+    private interface Command {
+        boolean execute(Rover rover);
+    }
+
+    private class MoveForwardCommand implements Command {
+        @Override
+        public boolean execute(Rover rover) {
+            return rover.moveForward();
         }
     }
 
@@ -57,6 +74,5 @@ public class MarsRoverService {
                 .reduce((s1, s2) -> s1 + System.lineSeparator() + s2)
                 .orElse("");
     }
-
 
 }
