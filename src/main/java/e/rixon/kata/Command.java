@@ -1,5 +1,5 @@
 package e.rixon.kata;
 
-interface Command {
+public interface Command {
     boolean execute(Rover rover);
 }

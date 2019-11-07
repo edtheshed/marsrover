@@ -1,6 +1,6 @@
 package e.rixon.kata;
 
-class TurnRightCommand implements Command {
+public class TurnRightCommand implements Command {
     @Override
     public boolean execute(Rover rover) {
         rover.turnRight();

@@ -1,6 +1,9 @@
 package e.rixon.kata;
 
 import java.util.*;
+import java.util.Map.Entry;
+
+import static java.util.Arrays.asList;
 
 public class MarsRoverService {
 
@@ -8,36 +11,35 @@ public class MarsRoverService {
     private int xGridSize;
     private int yGridSize;
 
-    private Map<Rover, String> roverStringMap;
-    private CommandParser<Character> commandParser = new CharacterCommandParser();
+    private Map<Rover, List<Command>> roverCommandsMap;
 
     public MarsRoverService(int xGridSize, int yGridSize, Position... obstacles) {
         this.xGridSize = xGridSize;
         this.yGridSize = yGridSize;
-        this.obstacles = Arrays.asList(obstacles);
-        roverStringMap = new HashMap<>();
+        this.obstacles = asList(obstacles);
+        roverCommandsMap = new HashMap<>();
     }
 
     public void setRover(int x, int y, Direction direction) {
-        setRover(x, y, direction, "");
+        roverCommandsMap.put(new Rover(new Position(x, y), direction, new Navigator(xGridSize, yGridSize, obstacles)), Collections.emptyList());
     }
 
-    public void setRover(int x, int y, Direction direction, String moves) {
-        roverStringMap.put(new Rover(new Position(x, y), direction, new Navigator(xGridSize, yGridSize, obstacles)), moves);
+    public void setRover(int x, int y, Direction direction, List<Command> commands) {
+        roverCommandsMap.put(new Rover(new Position(x, y), direction, new Navigator(xGridSize, yGridSize, obstacles)), commands);
     }
 
-    public void parseCommandsAndExecuteCommands() {
-        for (Map.Entry<Rover, String> roverMoveEntry : roverStringMap.entrySet()) {
-            Rover rover = roverMoveEntry.getKey();
-            char[] moveArray = roverMoveEntry.getValue().toCharArray();
-            for (char move : moveArray) {
-                commandParser.parseCommand(move).execute(rover);
+    public void executeCommands() {
+        for (Entry<Rover, List<Command>> roverCommandsEntry : roverCommandsMap.entrySet()) {
+            Rover rover = roverCommandsEntry.getKey();
+            List<Command> commands = roverCommandsEntry.getValue();
+            for(Command command: commands) {
+                command.execute(rover);
             }
         }
     }
 
     public String getOutput() {
-        Set<Rover> rovers = roverStringMap.keySet();
+        Set<Rover> rovers = roverCommandsMap.keySet();
         return rovers.stream()
                 .map(Rover::toString)
                 .reduce((s1, s2) -> s1 + System.lineSeparator() + s2)
